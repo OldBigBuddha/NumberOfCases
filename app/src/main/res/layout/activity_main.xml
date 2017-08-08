@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+<LinearLayout
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="24dp"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+        <EditText
+            android:id="@+id/et_num_1"
+            android:hint="  "
+            android:inputType="number"
+            android:singleLine="true"
+            android:textSize="24sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="16dp"/>
+
+        <TextView
+            android:id="@+id/tvOperator"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=" "
+            android:textColor="#000"
+            android:textAllCaps="true"
+            android:textSize="36dp"
+            android:padding="8dp"/>
+
+
+        <EditText
+            android:id="@+id/et_num_2"
+            android:hint="  "
+            android:inputType="number"
+            android:singleLine="true"
+            android:textSize="24sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="16dp"/>
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <HorizontalScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="8dp">
+
+        <TextView
+            android:id="@+id/tvAnswer"
+            android:textSize="36dp"
+            android:textColor="#000"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_gravity="right"/>
+
+    </HorizontalScrollView>
+
+    <Button
+        android:id="@+id/bt_equal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="="
+        android:textSize="64sp"
+        android:background="#000000ff"
+        android:gravity="center"/>
+
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingStart="24dp"
+        android:paddingEnd="24dp"
+        android:paddingTop="48dp"
+        android:paddingBottom="24dp">
+
+        <Button
+            android:id="@+id/bt_permutation"
+            android:text="P"
+            android:textSize="48sp"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:padding="4dp"
+            android:background="#f8f8f8" />
+        <Button
+            android:id="@+id/bt_combination"
+            android:text="C"
+            android:textSize="48sp"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:padding="4dp"
+            android:background="#f8f8f8" />
+        <Button
+            android:id="@+id/bt_homogeneous_product"
+            android:text="H"
+            android:textSize="48sp"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:padding="4dp"
+            android:background="#f8f8f8" />
+        <Button
+            android:id="@+id/bt_factorial"
+            android:text="!"
+            android:textSize="48sp"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:padding="4dp"
+            android:background="#f8f8f8" />
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/bt_clear"
+        android:text="Clear"
+        android:textSize="32sp"
+        android:textAllCaps="false"
+        android:background="#f8f8f8"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+</LinearLayout>
+</layout>

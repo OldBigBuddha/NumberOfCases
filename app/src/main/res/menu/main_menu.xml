@@ -2,9 +2,8 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-        android:id="@+id/check_night_menu"
-        android:title="Night Mode"
-        android:checkable="true"
-        android:checked="false"
-        app:showAsAction="never" />
+        android:id="@+id/go_setting_menu"
+        android:icon="@mipmap/ic_launcher"
+        app:showAsAction="ifRoom"
+        android:title="Setting" />
 </menu>

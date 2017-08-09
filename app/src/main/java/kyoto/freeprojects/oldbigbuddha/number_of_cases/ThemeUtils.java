@@ -12,16 +12,18 @@ public class ThemeUtils {
     public final static int THEME_DARK  = 0;
     public final static int THEME_LIGHT = 1;
 
-    private static int sTheme = THEME_LIGHT;
+    public final static String PREFERENCE = "ThemeData";
+    public final static String THEME      = "theme";
 
-    public static void changeTheme(Activity activity, int theme) {
-        sTheme = theme;
-        activity.finish();
-        activity.startActivity(new Intent(activity, activity.getClass()));
-    }
+//
+//    public static void changeTheme(Activity activity, int theme) {
+//        sTheme = theme;
+//        activity.finish();
+//        activity.startActivity(new Intent(activity, activity.getClass()));
+//    }
 
-    public static void setTheme(Activity activity) {
-        switch (sTheme) {
+    public static void setTheme(Activity activity, int theme) {
+        switch (theme) {
             default:
             case THEME_LIGHT: {
                 activity.setTheme(R.style.LightTheme);

@@ -1,7 +1,9 @@
 package kyoto.freeprojects.oldbigbuddha.number_of_cases;
 
 import android.app.UiModeManager;
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Resources;
 import android.databinding.DataBindingUtil;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -39,15 +41,15 @@ public class MainActivity extends AppCompatActivity {
     private Symbol mSymbol;
 
     private SharedPreferences mPreference;
-    private SharedPreferences.Editor mEditor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mPreference = getSharedPreferences(ThemeUtils.PREFERENCE, MODE_PRIVATE);
+
+        ThemeUtils.setTheme(this, mPreference.getInt(ThemeUtils.THEME, ThemeUtils.THEME_DARK));
         mBinding = DataBindingUtil.setContentView(MainActivity.this, R.layout.activity_main);
         setSupportActionBar(mBinding.toolbar);
-        mPreference = getSharedPreferences("themeDate", MODE_PRIVATE);
-        mEditor = mPreference.edit();
 
         initOnClick();
     }
@@ -117,7 +119,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main_menu, menu);
-        menu.getItem(0).setChecked(mPreference.getBoolean("checked", false));
         return true;
     }
 
@@ -125,29 +126,17 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         switch (id) {
-            case R.id.check_night_menu: {
+            case R.id.go_setting_menu: {
                 boolean isChecked = !item.isChecked();
                 Log.d("Menu Item", "Checked = " + isChecked);
-                if (isChecked) {
-                    ThemeUtils.changeTheme(this, ThemeUtils.THEME_DARK);
-                    saveTheme(isChecked, ThemeUtils.THEME_DARK);
-                    ThemeUtils.setTheme(this);
-                } else {
-                    ThemeUtils.changeTheme(this, ThemeUtils.THEME_LIGHT);
-                    saveTheme(isChecked, ThemeUtils.THEME_LIGHT);
-                    ThemeUtils.setTheme(this);
-                }
+                Intent intent = new Intent(this, SettingActivity.class);
+                startActivity(intent);
                 return true;
             }
         }
         return super.onOptionsItemSelected(item);
     }
 
-    private void saveTheme(boolean isChecked, int theme) {
-        mEditor.putBoolean("checked", isChecked);
-        mEditor.putInt("theme", theme);
-        mEditor.apply();
-    }
     private View.OnClickListener onClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {

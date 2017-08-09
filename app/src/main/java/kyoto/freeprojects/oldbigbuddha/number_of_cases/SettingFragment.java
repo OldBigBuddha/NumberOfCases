@@ -33,18 +33,13 @@ public class SettingFragment extends PreferenceFragment {
             public boolean onPreferenceChange(Preference preference, Object o) {
                 boolean isChecked = (boolean)o;
                 int theme = isChecked ? ThemeUtils.THEME_DARK : ThemeUtils.THEME_LIGHT;
-                save( theme );
-
+                mEditor.putInt(ThemeUtils.THEME, theme);
+                mEditor.commit();
                 getActivity().finish();
                 getActivity().startActivity(new Intent(getActivity(), getActivity().getClass()));
 
                 return true;
             }
         });
-    }
-
-    public void save(int theme) {
-        mEditor.putInt(ThemeUtils.THEME, theme);
-        mEditor.apply();
     }
 }

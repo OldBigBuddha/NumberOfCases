@@ -45,9 +45,10 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mPreference = getSharedPreferences(ThemeUtils.PREFERENCE, MODE_PRIVATE);
 
+        mPreference = getSharedPreferences(ThemeUtils.PREFERENCE, MODE_PRIVATE);
         ThemeUtils.setTheme(this, mPreference.getInt(ThemeUtils.THEME, ThemeUtils.THEME_DARK));
+
         mBinding = DataBindingUtil.setContentView(MainActivity.this, R.layout.activity_main);
         setSupportActionBar(mBinding.toolbar);
 

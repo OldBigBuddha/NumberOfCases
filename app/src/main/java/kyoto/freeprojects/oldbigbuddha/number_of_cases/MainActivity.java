@@ -1,16 +1,18 @@
 package kyoto.freeprojects.oldbigbuddha.number_of_cases;
 
-import android.content.DialogInterface;
-import android.content.Intent;
-import android.database.DatabaseUtils;
+import android.app.UiModeManager;
+import android.content.SharedPreferences;
 import android.databinding.DataBindingUtil;
-import android.os.StrictMode;
-import android.support.v4.text.TextUtilsCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
-import android.widget.TextView;
+
+import java.math.BigDecimal;
+import java.math.BigInteger;
 
 import kyoto.freeprojects.oldbigbuddha.number_of_cases.databinding.ActivityMainBinding;
 import static kyoto.freeprojects.oldbigbuddha.number_of_cases.Symbol.*;
@@ -36,10 +38,17 @@ public class MainActivity extends AppCompatActivity {
     private ActivityMainBinding mBinding;
     private Symbol mSymbol;
 
+    private SharedPreferences mPreference;
+    private SharedPreferences.Editor mEditor;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mBinding = DataBindingUtil.setContentView(MainActivity.this, R.layout.activity_main);
+        setSupportActionBar(mBinding.toolbar);
+        mPreference = getSharedPreferences("themeDate", MODE_PRIVATE);
+        mEditor = mPreference.edit();
+
         initOnClick();
     }
 
@@ -51,10 +60,10 @@ public class MainActivity extends AppCompatActivity {
         mBinding.btEqual.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                int n = Integer.parseInt(mBinding.etNum1.getText().toString());
-                int r = 0;
+                BigInteger n = new BigInteger( mBinding.etNum1.getText().toString() );
+                BigInteger r = null;
                 if (!TextUtils.isEmpty(mBinding.etNum2.getText())) {
-                    r = Integer.parseInt( mBinding.etNum2.getText().toString() );
+                    r = new BigInteger( mBinding.etNum2.getText().toString() );
                 }
                 switch (mSymbol) {
                     case PERMUTATION: {
@@ -87,7 +96,6 @@ public class MainActivity extends AppCompatActivity {
                 mBinding.etNum1.setFocusableInTouchMode(true);
                 mBinding.etNum1.requestFocus(View.FOCUS_UP);
                 mBinding.etNum1.setSelection(0);
-
             }
         });
     }
@@ -96,8 +104,8 @@ public class MainActivity extends AppCompatActivity {
         mBinding.tvOperator.setText(ope);
     }
 
-    private void setAnswer(int answer) {
-        mBinding.tvAnswer.setText(answer + "");
+    private void setAnswer(BigInteger answer) {
+        mBinding.tvAnswer.setText(answer.toString());
     }
 
     private void moveFocus() {
@@ -106,6 +114,40 @@ public class MainActivity extends AppCompatActivity {
         mBinding.etNum2.setSelection(0);
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main_menu, menu);
+        menu.getItem(0).setChecked(mPreference.getBoolean("checked", false));
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        switch (id) {
+            case R.id.check_night_menu: {
+                boolean isChecked = !item.isChecked();
+                Log.d("Menu Item", "Checked = " + isChecked);
+                if (isChecked) {
+                    ThemeUtils.changeTheme(this, ThemeUtils.THEME_DARK);
+                    saveTheme(isChecked, ThemeUtils.THEME_DARK);
+                    ThemeUtils.setTheme(this);
+                } else {
+                    ThemeUtils.changeTheme(this, ThemeUtils.THEME_LIGHT);
+                    saveTheme(isChecked, ThemeUtils.THEME_LIGHT);
+                    ThemeUtils.setTheme(this);
+                }
+                return true;
+            }
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void saveTheme(boolean isChecked, int theme) {
+        mEditor.putBoolean("checked", isChecked);
+        mEditor.putInt("theme", theme);
+        mEditor.apply();
+    }
     private View.OnClickListener onClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
@@ -123,15 +165,4 @@ public class MainActivity extends AppCompatActivity {
             moveFocus();
         }
     };
-}
-
-enum Symbol {
-    PERMUTATION("p"),
-    COMBINATION("c"),
-    HOMOGENEOUSPRODUCT("h"),
-    FACTORIAL("!"), ;
-    public final String ope;
-    Symbol(String ope) {
-        this.ope = ope;
-    }
 }

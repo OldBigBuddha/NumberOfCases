@@ -2,6 +2,9 @@ package kyoto.freeprojects.oldbigbuddha.number_of_cases;
 
 import android.util.Log;
 
+import java.math.BigDecimal;
+import java.math.BigInteger;
+
 /**
  * Copyright 2017 Big Buddha
  *
@@ -21,33 +24,32 @@ import android.util.Log;
 
 public class CasesUtils {
 
-    public static int permutation(int n, int r) {
-        if (n < r) return 0;
-        if (n == 0) return 1;
-        if (r == 0) return 1;
-        if (r == 1) return n;
-        if (n == r) return factorial(n);
-        int answer = n;
-        int i = n - 1;
+    public static BigInteger permutation(BigInteger n, BigInteger r) {
+        if (n.compareTo(r) < 0) return null;                            // (n P r) n < r -> null
+        if (n.compareTo(BigInteger.ZERO) == 0) return null;             // (n P r) n = 0 -> null
+        if (r.compareTo(BigInteger.ZERO) == 0) return BigInteger.ONE;   // (n P r) r = 0 -> 1
+        if (r.compareTo(BigInteger.ONE) == 0) return n;                 // (n P r) r = 1 -> n
+        if (n.compareTo(r) == 0) return factorial(n);                   // (n P r) n = r -> n!
+
+        BigInteger answer = n;
+        BigInteger i = n.subtract(BigInteger.ONE);
         do {
-            Log.i("Count", "i = " + i);
-            Log.d("Calc", answer + " * " + i);
-            answer *= i;
-            i--;
-        } while (i > n - r);
+            answer = answer.multiply(i);
+            i = i.subtract(BigInteger.ONE);
+        } while (i.compareTo(n.subtract(r)) > 0 );                      // (n P r) = n * (n-1) * (n-2) ・・・ * (n-r+1)
         return answer;
     }
 
-    public static Integer factorial(int n) {
-        if(n==1) return 1;
-        else return n * factorial(n-1);
+    public static BigInteger factorial(BigInteger n) {
+        if(n.compareTo(BigInteger.ZERO) == 0 || n.compareTo(BigInteger.ONE) == 0) return BigInteger.ONE;    // 0! = 1, 1! = 1
+        else return n.multiply( factorial(n.subtract(BigInteger.ONE)) );                                    // n! = n * (n-1) * (n-2) ・・・ * 1
     }
 
-    public static Integer combination(int n, int r) {
-        return permutation(n, r) / factorial(r);
+    public static BigInteger combination(BigInteger n, BigInteger r) {
+        return permutation(n, r).divide( factorial(r) );                // (n P r) / r!
     }
 
-    public static int homogeneousProduct(int n, int r) {
-        return combination(n + r - 1, r);
+    public static BigInteger homogeneousProduct(BigInteger n, BigInteger r) {
+        return combination(n.add(r).subtract(BigInteger.ONE), r);       // n + r - 1 C r
     }
 }

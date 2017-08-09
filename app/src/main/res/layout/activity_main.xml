@@ -7,6 +7,12 @@
     android:layout_margin="24dp"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:titleTextColor="@android:color/black"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"></android.support.v7.widget.Toolbar>
+
     <LinearLayout
         android:orientation="horizontal"
         android:gravity="center"
@@ -94,7 +100,8 @@
             android:layout_weight="1"
             android:layout_height="wrap_content"
             android:padding="4dp"
-            android:background="#f8f8f8" />
+            android:background="@color/background"
+            android:tag="p"/>
         <Button
             android:id="@+id/bt_combination"
             android:text="C"
@@ -103,7 +110,8 @@
             android:layout_weight="1"
             android:layout_height="wrap_content"
             android:padding="4dp"
-            android:background="#f8f8f8" />
+            android:background="@color/background"
+            android:tag="c"/>
         <Button
             android:id="@+id/bt_homogeneous_product"
             android:text="H"
@@ -112,7 +120,8 @@
             android:layout_weight="1"
             android:layout_height="wrap_content"
             android:padding="4dp"
-            android:background="#f8f8f8" />
+            android:background="@color/background"
+            android:tag="h"/>
         <Button
             android:id="@+id/bt_factorial"
             android:text="!"
@@ -121,7 +130,8 @@
             android:layout_weight="1"
             android:layout_height="wrap_content"
             android:padding="4dp"
-            android:background="#f8f8f8" />
+            android:background="@color/background"
+            android:tag="!"/>
 
     </LinearLayout>
 
@@ -130,7 +140,7 @@
         android:text="Clear"
         android:textSize="32sp"
         android:textAllCaps="false"
-        android:background="#f8f8f8"
+        android:background="@color/background"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
